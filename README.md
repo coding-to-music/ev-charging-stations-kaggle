@@ -264,6 +264,11 @@ You can change the column numbers according to your needs, and the delimiter can
 ## use cut to create the file to be loaded
 
 ```
+# this leaves the header row in the file
 cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26 Electric-and-Alternative-Fuel-Charging-Stations.csv | paste -sd ',' > ev_locations.csv
 ```
 
+```
+# this removes the header row from the file
+tail -n +2 Electric-and-Alternative-Fuel-Charging-Stations.csv | cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26  | paste -sd ',' > ev_locations.csv
+```
