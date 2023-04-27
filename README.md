@@ -13,6 +13,8 @@ https://github.com/Kaggle/kaggle-api
 
 https://github.com/Kaggle/kaggle-api/blob/main/README.md
 
+https://volkovlabs.io/blog/how-to-create-your-first-grafana-dashboard-bd0f68d631bd/
+
 ```java
 kaggle.json is needed, see below
 
@@ -144,69 +146,124 @@ The complete documentation can be found: Kaggle.https://github.com/Kaggle/kaggle
 ## Columns in the data file
 
 ```
-Fuel Type Code,
-Station Name,
-Street Address,
-Intersection Directions,
-City,
-State,
-ZIP,
-Plus4,
-Station Phone,
-Status Code,
-Expected Date,
-Groups With Access Code,
-Access Days Time,
-Cards Accepted,
-BD Blends,
-NG Fill Type Code,
-NG PSI,
-EV Level1 EVSE Num,
-EV Level2 EVSE Num,
-EV DC Fast Count,
-EV Other Info,
-EV Network,
-EV Network Web,
-Geocode Status,
-Latitude,
-Longitude,
-Date Last Confirmed,
-ID,
-Updated At,
-Owner Type Code,
-Federal Agency ID,
-Federal Agency Name,
-Open Date,
-Hydrogen Status Link,
-NG Vehicle Class,
-LPG Primary,
-E85 Blender Pump,
-EV Connector Types,
-Country,
-Intersection Directions (French),
-Access Days Time (French),
-BD Blends (French),
-Groups With Access Code (French),
-Hydrogen Is Retail,
-Access Code,
-Access Detail Code,
-Federal Agency Code,
-Facility Type,
-CNG Dispenser Num,
-CNG On-Site Renewable Source,
-CNG Total Compression Capacity,
-CNG Storage Capacity,
-LNG On-Site Renewable Source,
-E85 Other Ethanol Blends,
-EV Pricing,
-EV Pricing (French),
-LPG Nozzle Types,
-Hydrogen Pressures,
-Hydrogen Standards,
-CNG Fill Type Code,
-CNG PSI,
-CNG Vehicle Class,
-LNG Vehicle Class,
-EV On-Site Renewable Source,
-Restricted Access
+ 1 Fuel Type Code,
+ 2 Station Name,
+ 3 Street Address,
+ 4 Intersection Directions,
+ 5 City,
+ 6 State,
+ 7 ZIP,
+ 8 Plus4,
+ 9 Station Phone,
+10 Status Code,
+11 Expected Date,
+12 Groups With Access Code,
+13 Access Days Time,
+14 Cards Accepted,
+15 BD Blends,
+16 NG Fill Type Code,
+17 NG PSI,
+18 EV Level1 EVSE Num,
+19 EV Level2 EVSE Num,
+20 EV DC Fast Count,
+21 EV Other Info,
+22 EV Network,
+23 EV Network Web,
+24 Geocode Status,
+25 Latitude,
+26 Longitude,
+27 Date Last Confirmed,
+28 ID,
+29 Updated At,
+30 Owner Type Code,
+31 Federal Agency ID,
+32 Federal Agency Name,
+33 Open Date,
+34 Hydrogen Status Link,
+35 NG Vehicle Class,
+36 LPG Primary,
+37 E85 Blender Pump,
+38 EV Connector Types,
+39 Country,
+40 Intersection Directions (French),
+41 Access Days Time (French),
+42 BD Blends (French),
+43 Groups With Access Code (French),
+44 Hydrogen Is Retail,
+45 Access Code,
+46 Access Detail Code,
+47 Federal Agency Code,
+48 Facility Type,
+49 CNG Dispenser Num,
+50 CNG On-Site Renewable Source,
+51 CNG Total Compression Capacity,
+52 CNG Storage Capacity,
+53 LNG On-Site Renewable Source,
+54 E85 Other Ethanol Blends,
+55 EV Pricing,
+56 EV Pricing (French),
+57 LPG Nozzle Types,
+58 Hydrogen Pressures,
+59 Hydrogen Standards,
+60 CNG Fill Type Code,
+61 CNG PSI,
+62 CNG Vehicle Class,
+63 LNG Vehicle Class,
+64 EV On-Site Renewable Source,
+65 Restricted Access
 ```
+
+## Target columns
+
+ 1 Fuel_Type_Code           varchar(400) NULL,
+ 2 Station_Name             varchar(400) NULL,
+ 3 Street_Address           varchar(400) NULL,
+ 5 City                     varchar(400) NULL,
+ 6 State                    varchar(400) NULL,
+ 7 ZIP                      varchar(400) NULL,
+ 8 Plus4                    varchar(400) NULL,
+10 Status_Code              varchar(400) NULL,
+12 Groups_With_Access_Code  varchar(400) NULL,
+13 Access_Days_Time         varchar(400) NULL,
+25 Latitude                 varchar(400) NULL,
+48 Facility_Type            varchar(400) NULL,
+26 Longitude                varchar(400) NULL
+
+
+## The new .csv file should look like this
+
+create table ev_locations
+(
+Fuel_Type_Code           varchar(400) NULL,
+Station_Name             varchar(400) NULL,
+Street_Address           varchar(400) NULL,
+City                     varchar(400) NULL,
+State                    varchar(400) NULL,
+ZIP                      varchar(400) NULL,
+Plus4                    varchar(400) NULL,
+Status_Code              varchar(400) NULL,
+Groups_With_Access_Code  varchar(400) NULL,
+Access_Days_Time         varchar(400) NULL,
+Latitude                 varchar(400) NULL,
+Facility_Type            varchar(400) NULL,
+Longitude                varchar(400) NULL
+);
+
+## How to cut columnns from the .csv and put the desired columns into a new file
+
+You can use the cut command to extract specific columns from your CSV file and then use paste command to combine those columns into a new CSV file. Here's an example command that you can use:
+
+```
+cut -d',' -f1,3,5,7,9 original_file.csv | paste -sd ',' > new_file.csv
+```
+
+This command extracts columns 1, 3, 5, 7, and 9 from original_file.csv using the comma (,) delimiter and then combines them using the comma delimiter as well to create a new file called new_file.csv.
+
+You can change the column numbers according to your needs, and the delimiter can be changed to a different character if needed.
+
+## use cut to create the file to be loaded
+
+```
+cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26 Electric-and-Alternative-Fuel-Charging-Stations.csv | paste -sd ',' > ev_locations.csv
+```
+
