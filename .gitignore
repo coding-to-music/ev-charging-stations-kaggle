@@ -3,6 +3,9 @@
 kaggle.json
 .kaggle/
 
+Electric-and-Alternative-Fuel-Charging-Stations.csv
+electric-and-alternative-fuel-charging-stations.zip
+
 # dependencies
 /node_modules
 /.pnp
