@@ -249,137 +249,43 @@ Facility_Type            varchar(400) NULL,
 Longitude                varchar(400) NULL
 );
 
+## Remove the header row
+
+```
+tail -n +2 original.csv > original-1.csv
+```
+
 ## How to cut columnns from the .csv and put the desired columns into a new file
 
-You can use the cut command to extract specific columns from your CSV file and then use paste command to combine those columns into a new CSV file. Here's an example command that you can use:
-
 ```
-cut -d',' -f1,3,5,7,9 original_file.csv | paste -sd ',' > new_file.csv
+awk -F ',' '{print $1 "," $2 "," $3 "," $5 "," $6 "," $7 "," $8 "," $10 "," $12 "," $13 "," $25 "," $48 "," $26 }' original-1.csv > original-2.csv
 ```
 
-This command extracts columns 1, 3, 5, 7, and 9 from original_file.csv using the comma (,) delimiter and then combines them using the comma delimiter as well to create a new file called new_file.csv.
-
-You can change the column numbers according to your needs, and the delimiter can be changed to a different character if needed.
-
-## use cut to create the file to be loaded
+## View the header row?
 
 ```
-# this leaves the header row in the file
-cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26 Electric-and-Alternative-Fuel-Charging-Stations.csv | paste -sd ',' > ev_locations.csv
-
-cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26 original.csv | paste -sd ',' > original-1.csv
-```
-
-```
-# this removes the header row from the file
-tail -n +2 Electric-and-Alternative-Fuel-Charging-Stations.csv | cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26  | paste -sd ',' > ev_locations.csv
-
-tail -n +2 original.csv | cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26  | paste -sd ',' > original-2.csv
-```
-
-## another attempt to cut columns from the csv and put them into a new csv
-
-```
-awk -F ',' '{print $1 "," $3 "," $5 "," $7 "," $9}' original_file.csv > new_file.csv
-
-cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26 original.csv | paste -sd ',' > original-1.csv
-
-awk -F ',' '{print $1 "," $2 "," $3 "," $5 "," $6 "," $7 "," $8 "," $10 "," $12 "," $13 "," $25 "," $48 "," $26 }' original.csv > original-4.csv
-```
-
-This command tells awk to use comma as the field separator (-F ',') and then print the 1st, 3rd, 5th, 7th, and 9th fields separated by commas. The output is then redirected to a new file named new_file.csv.
-
-Note that you can modify the column numbers in the {print ...} statement to extract the columns you need.
-
-Also, if your original file has a header row, you can exclude it from the output by adding NR>1 && before the {print ...} statement. This tells awk to only perform the action on lines with a line number (NR) greater than 1.
-
-## I have a .csv file. How do I cut the first row (column headers) and only keep the rows with data? 
-
-You can use the tail command in Linux to remove the first row of the CSV file and then redirect the output to a new file. Here's an example command:
-
-```
-tail -n +2 input.csv > output.csv
-
-tail -n +2 original.csv > original-3.csv
-```
-
-Explanation:
-
-- tail command is used to output the last part of a file.
-- -n option is used to specify the number of lines to be displayed.
-- +2 means to start from the second line of the file.
-- input.csv is the name of the input file.
-- > is used to redirect the output to a new file called output.csv.
-
-This command will remove the first row (column headers) from the input.csv file and write the remaining rows (data) to a new file called output.csv.
-
-## How would I view the header row?
-
-If you want to view the header row of a CSV file, you can use the head command in Linux to display the first few lines of the file. Here's an example command:
-
-```
-head -n 1 input.csv
-
 head -n 1 original.csv
 head -n 1 original-1.csv
 head -n 1 original-2.csv
-head -n 1 original-3.csv
-head -n 1 original-4.csv
 ```
 
-Explanation:
-
-- head command is used to output the first part of a file.
-- -n option is used to specify the number of lines to be displayed. In this case, we want to display only the first line.
-- 1 means the first line of the file.
-- input.csv is the name of the input file.
-- This command will display the header row (first line) of the input.csv file.
-
-## How would I count the columns in the header row or the body?
-
-To count the number of columns in the header row or the body of a CSV file in Linux, you can use the awk command. Here are the examples:
+## Count the columns in the header row or the body
 
 Counting the number of columns in the header row:
 
 ```
-head -n 1 input.csv | awk -F ',' '{print NF}'
-
 head -n 1 original.csv | awk -F ',' '{print NF}'
 head -n 1 original-1.csv | awk -F ',' '{print NF}'
 head -n 1 original-2.csv | awk -F ',' '{print NF}'
-head -n 1 original-3.csv | awk -F ',' '{print NF}'
-head -n 1 original-4.csv | awk -F ',' '{print NF}'
 ```
-
-Explanation:
-
-- head -n 1 input.csv command is used to extract the first row (header row) of the CSV file.
-- awk command is used to split the header row into columns using , as the delimiter and count the number of columns.
-- -F ',' option is used to specify the delimiter as ,.
-- {print NF} prints the number of columns.
-
-This command will output the number of columns in the header row of the input.csv file.
 
 Counting the number of columns in the body:
 
 ```
-awk -F ',' '{print NF; exit}' input.csv
-
 awk -F ',' '{print NF; exit}' original.csv
 awk -F ',' '{print NF; exit}' original-1.csv
 awk -F ',' '{print NF; exit}' original-2.csv
-awk -F ',' '{print NF; exit}' original-3.csv
-awk -F ',' '{print NF; exit}' original-4.csv
 ```
-
-Explanation:
-
-awk command is used to split the rows in the CSV file into columns using , as the delimiter and count the number of columns in the first row only.
-
-- -F ',' option is used to specify the delimiter as ,.
-- {print NF; exit} prints the number of columns in the first row and then exits.
-
-This command will output the number of columns in the body of the input.csv file. Note that this assumes that all the rows in the file have the same number of columns.
 
 ## Count the number of rows in the csv file
 
@@ -387,8 +293,6 @@ This command will output the number of columns in the body of the input.csv file
 wc -l original.csv
 wc -l original-1.csv
 wc -l original-2.csv
-wc -l original-3.csv
-wc -l original-4.csv
 ```
 
 
