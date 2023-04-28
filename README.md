@@ -272,3 +272,71 @@ cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26 Electric-and-Alternative-Fuel-Chargi
 # this removes the header row from the file
 tail -n +2 Electric-and-Alternative-Fuel-Charging-Stations.csv | cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26  | paste -sd ',' > ev_locations.csv
 ```
+
+## I have a .csv file. How do I cut the first row (column headers) and only keep the rows with data? I am using linux
+
+You can use the tail command in Linux to remove the first row of the CSV file and then redirect the output to a new file. Here's an example command:
+
+```
+tail -n +2 input.csv > output.csv
+```
+
+Explanation:
+
+- tail command is used to output the last part of a file.
+- -n option is used to specify the number of lines to be displayed.
+- +2 means to start from the second line of the file.
+- input.csv is the name of the input file.
+- > is used to redirect the output to a new file called output.csv.
+
+This command will remove the first row (column headers) from the input.csv file and write the remaining rows (data) to a new file called output.csv.
+
+## How would I view the header row?
+
+If you want to view the header row of a CSV file, you can use the head command in Linux to display the first few lines of the file. Here's an example command:
+
+```
+head -n 1 input.csv
+```
+
+Explanation:
+
+- head command is used to output the first part of a file.
+- -n option is used to specify the number of lines to be displayed. In this case, we want to display only the first line.
+- 1 means the first line of the file.
+- input.csv is the name of the input file.
+- This command will display the header row (first line) of the input.csv file.
+
+## How would I count the columns in the header row or the body?
+
+To count the number of columns in the header row or the body of a CSV file in Linux, you can use the awk command. Here are the examples:
+
+Counting the number of columns in the header row:
+
+```
+head -n 1 input.csv | awk -F ',' '{print NF}'
+```
+
+Explanation:
+
+- head -n 1 input.csv command is used to extract the first row (header row) of the CSV file.
+- awk command is used to split the header row into columns using , as the delimiter and count the number of columns.
+- -F ',' option is used to specify the delimiter as ,.
+- {print NF} prints the number of columns.
+
+This command will output the number of columns in the header row of the input.csv file.
+
+Counting the number of columns in the body:
+
+```
+awk -F ',' '{print NF; exit}' input.csv
+```
+
+Explanation:
+
+awk command is used to split the rows in the CSV file into columns using , as the delimiter and count the number of columns in the first row only.
+
+- -F ',' option is used to specify the delimiter as ,.
+- {print NF; exit} prints the number of columns in the first row and then exits.
+
+This command will output the number of columns in the body of the input.csv file. Note that this assumes that all the rows in the file have the same number of columns.
