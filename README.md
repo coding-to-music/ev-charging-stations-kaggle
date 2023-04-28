@@ -277,6 +277,22 @@ tail -n +2 Electric-and-Alternative-Fuel-Charging-Stations.csv | cut -d',' -f1,2
 tail -n +2 original.csv | cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26  | paste -sd ',' > original-2.csv
 ```
 
+## another attempt to cut columns from the csv and put them into a new csv
+
+```
+awk -F ',' '{print $1 "," $3 "," $5 "," $7 "," $9}' original_file.csv > new_file.csv
+
+cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26 original.csv | paste -sd ',' > original-1.csv
+
+awk -F ',' '{print $1 "," $2 "," $3 "," $5 "," $6 "," $7 "," $8 "," $10 "," $12 "," $13 "," $25 "," $48 "," $26 }' original.csv > original-4.csv
+```
+
+This command tells awk to use comma as the field separator (-F ',') and then print the 1st, 3rd, 5th, 7th, and 9th fields separated by commas. The output is then redirected to a new file named new_file.csv.
+
+Note that you can modify the column numbers in the {print ...} statement to extract the columns you need.
+
+Also, if your original file has a header row, you can exclude it from the output by adding NR>1 && before the {print ...} statement. This tells awk to only perform the action on lines with a line number (NR) greater than 1.
+
 ## I have a .csv file. How do I cut the first row (column headers) and only keep the rows with data? 
 
 You can use the tail command in Linux to remove the first row of the CSV file and then redirect the output to a new file. Here's an example command:
@@ -308,6 +324,7 @@ head -n 1 original.csv
 head -n 1 original-1.csv
 head -n 1 original-2.csv
 head -n 1 original-3.csv
+head -n 1 original-4.csv
 ```
 
 Explanation:
@@ -331,6 +348,7 @@ head -n 1 original.csv | awk -F ',' '{print NF}'
 head -n 1 original-1.csv | awk -F ',' '{print NF}'
 head -n 1 original-2.csv | awk -F ',' '{print NF}'
 head -n 1 original-3.csv | awk -F ',' '{print NF}'
+head -n 1 original-4.csv | awk -F ',' '{print NF}'
 ```
 
 Explanation:
@@ -351,6 +369,7 @@ awk -F ',' '{print NF; exit}' original.csv
 awk -F ',' '{print NF; exit}' original-1.csv
 awk -F ',' '{print NF; exit}' original-2.csv
 awk -F ',' '{print NF; exit}' original-3.csv
+awk -F ',' '{print NF; exit}' original-4.csv
 ```
 
 Explanation:
@@ -369,5 +388,7 @@ wc -l original.csv
 wc -l original-1.csv
 wc -l original-2.csv
 wc -l original-3.csv
-
+wc -l original-4.csv
 ```
+
+
