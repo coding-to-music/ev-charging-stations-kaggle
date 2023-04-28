@@ -304,6 +304,11 @@ Counting the number of columns in the body:
 awk -F ',' '{print NF; exit}' original.csv
 awk -F ',' '{print NF; exit}' original-1.csv
 awk -F ',' '{print NF; exit}' original-2.csv
+
+
+65
+65
+13
 ```
 
 ## Count the number of rows in the csv file
@@ -312,6 +317,11 @@ awk -F ',' '{print NF; exit}' original-2.csv
 wc -l original.csv
 wc -l original-1.csv
 wc -l original-2.csv
+
+
+71819
+71818
+70453
 ```
 
 ## Copy original-2.csv to a file named ev_locations.csv
@@ -320,3 +330,97 @@ wc -l original-2.csv
 cp original-2.csv ev_locations.csv
 ```
 
+## verify can connect from the command line
+
+```
+sudo apt install postgresql-client
+```
+
+## connect via postgresql-client 
+
+```
+psql -h localhost -p 5432 -U postgres
+```
+
+Try a command, always end with a semicolin;
+```
+CREATE TABLE IF NOT EXISTS mytable (
+  id SERIAL PRIMARY KEY,
+  datetime TIMESTAMP NOT NULL
+);
+```
+
+verify
+
+```
+SELECT COUNT(*) FROM mytable;
+```
+
+Full example of connecting and executing commands
+
+```
+psql -h localhost -p 5432 -U postgres
+Password for user postgres: 
+```
+
+Output
+
+```
+psql (12.14 (Ubuntu 12.14-0ubuntu0.20.04.1), server 15.2 (Debian 15.2-1.pgdg110+1))
+WARNING: psql major version 12, server major version 15.
+         Some psql features might not work.
+Type "help" for help.
+
+postgres=# CREATE TABLE IF NOT EXISTS mytable (
+postgres(#   id SERIAL PRIMARY KEY,
+postgres(#   datetime TIMESTAMP NOT NULL
+postgres(# );
+CREATE TABLE
+postgres=# SELECT COUNT(*) FROM mytable;
+ count 
+-------
+     0
+(1 row)
+```
+
+## Try the simulation
+
+```
+npm run simulation
+```
+
+Output
+
+```
+> postgresql-pgadmin-docker-compose@1.0.0 simulation
+> node ./simulation.js
+
+Number of rows before: 2
+{
+  id: '1679990154903',
+  mystring: 'mykey_1679990154903',
+  datetime: 2023-03-28T12:55:54.903Z
+}
+Number of rows after: 3
+[
+  { id: '1679990031918', datetime: 2023-03-28T12:53:51.918Z },
+  { id: '1679990039882', datetime: 2023-03-28T12:53:59.882Z },
+  { id: '1679990154903', datetime: 2023-03-28T12:55:54.903Z}
+]
+```
+
+## To load into Postgres
+
+```
+\copy ev_locations from 'ev_locations.csv' delimiter',' CSV header;
+```
+
+## Count rows in the table
+
+```
+SELECT COUNT(*) FROM ev_locations;
+
+ count 
+-------
+ 70405
+```
