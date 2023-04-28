@@ -255,9 +255,28 @@ Longitude                varchar(400) NULL
 tail -n +2 original.csv > original-1.csv
 ```
 
+## use csvkit because it can handle quotes around the address field which itself contains commas
+
+```
+pip install csvkit
+```
+
+```
+csvcut -c 1,2,3,5,6,7,8,10,12,13,25,26,48 original-1.csv > original-2.csv
+```
+
+## To ensure there are line breaks after each line
+
+```
+# NOT NEEDED - OMIT
+csvcut -c 1,2,3,5,6,7,8,10,12,13,25,26,48 original-1.csv | unix2dos > original-2.csv
+```
+
+
 ## How to cut columnns from the .csv and put the desired columns into a new file
 
 ```
+NOT NEEDED - DOES NOT HANDLE COMMAS IN THE ADDRESS FIELD CORRECTLY
 awk -F ',' '{print $1 "," $2 "," $3 "," $5 "," $6 "," $7 "," $8 "," $10 "," $12 "," $13 "," $25 "," $48 "," $26 }' original-1.csv > original-2.csv
 ```
 
