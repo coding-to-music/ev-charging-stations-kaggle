@@ -361,3 +361,13 @@ awk command is used to split the rows in the CSV file into columns using , as th
 - {print NF; exit} prints the number of columns in the first row and then exits.
 
 This command will output the number of columns in the body of the input.csv file. Note that this assumes that all the rows in the file have the same number of columns.
+
+## Count the number of rows in the csv file
+
+```
+wc -l original.csv
+wc -l original-1.csv
+wc -l original-2.csv
+wc -l original-3.csv
+
+```
