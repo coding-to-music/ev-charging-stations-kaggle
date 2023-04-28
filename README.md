@@ -273,7 +273,7 @@ cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26 Electric-and-Alternative-Fuel-Chargi
 tail -n +2 Electric-and-Alternative-Fuel-Charging-Stations.csv | cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26  | paste -sd ',' > ev_locations.csv
 ```
 
-## I have a .csv file. How do I cut the first row (column headers) and only keep the rows with data? I am using linux
+## I have a .csv file. How do I cut the first row (column headers) and only keep the rows with data? 
 
 You can use the tail command in Linux to remove the first row of the CSV file and then redirect the output to a new file. Here's an example command:
 

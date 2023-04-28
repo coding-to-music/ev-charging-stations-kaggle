@@ -6,6 +6,7 @@ kaggle.json
 ev_locations.csv
 Electric-and-Alternative-Fuel-Charging-Stations.csv
 electric-and-alternative-fuel-charging-stations.zip
+*.csv
 
 # dependencies
 /node_modules
