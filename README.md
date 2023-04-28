@@ -266,11 +266,15 @@ You can change the column numbers according to your needs, and the delimiter can
 ```
 # this leaves the header row in the file
 cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26 Electric-and-Alternative-Fuel-Charging-Stations.csv | paste -sd ',' > ev_locations.csv
+
+cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26 original.csv | paste -sd ',' > original-1.csv
 ```
 
 ```
 # this removes the header row from the file
 tail -n +2 Electric-and-Alternative-Fuel-Charging-Stations.csv | cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26  | paste -sd ',' > ev_locations.csv
+
+tail -n +2 original.csv | cut -d',' -f1,2,3,5,6,7,8,10,12,13,25,48,26  | paste -sd ',' > original-2.csv
 ```
 
 ## I have a .csv file. How do I cut the first row (column headers) and only keep the rows with data? 
@@ -279,6 +283,8 @@ You can use the tail command in Linux to remove the first row of the CSV file an
 
 ```
 tail -n +2 input.csv > output.csv
+
+tail -n +2 original.csv > original-3.csv
 ```
 
 Explanation:
@@ -297,6 +303,11 @@ If you want to view the header row of a CSV file, you can use the head command i
 
 ```
 head -n 1 input.csv
+
+head -n 1 original.csv
+head -n 1 original-1.csv
+head -n 1 original-2.csv
+head -n 1 original-3.csv
 ```
 
 Explanation:
@@ -315,6 +326,11 @@ Counting the number of columns in the header row:
 
 ```
 head -n 1 input.csv | awk -F ',' '{print NF}'
+
+head -n 1 original.csv | awk -F ',' '{print NF}'
+head -n 1 original-1.csv | awk -F ',' '{print NF}'
+head -n 1 original-2.csv | awk -F ',' '{print NF}'
+head -n 1 original-3.csv | awk -F ',' '{print NF}'
 ```
 
 Explanation:
@@ -330,6 +346,11 @@ Counting the number of columns in the body:
 
 ```
 awk -F ',' '{print NF; exit}' input.csv
+
+awk -F ',' '{print NF; exit}' original.csv
+awk -F ',' '{print NF; exit}' original-1.csv
+awk -F ',' '{print NF; exit}' original-2.csv
+awk -F ',' '{print NF; exit}' original-3.csv
 ```
 
 Explanation:
