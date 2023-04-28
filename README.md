@@ -295,4 +295,9 @@ wc -l original-1.csv
 wc -l original-2.csv
 ```
 
+## Copy original-2.csv to a file named ev_locations.csv
+
+```
+cp original-2.csv ev_locations.csv
+```
 
