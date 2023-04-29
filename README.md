@@ -215,6 +215,7 @@ The complete documentation can be found: Kaggle.https://github.com/Kaggle/kaggle
 
 ## Target columns
 
+```
  1 Fuel_Type_Code           varchar(400) NULL,
  2 Station_Name             varchar(400) NULL,
  3 Street_Address           varchar(400) NULL,
@@ -228,10 +229,12 @@ The complete documentation can be found: Kaggle.https://github.com/Kaggle/kaggle
 25 Latitude                 varchar(400) NULL,
 48 Facility_Type            varchar(400) NULL,
 26 Longitude                varchar(400) NULL
+```
 
 
 ## The new .csv file should look like this
 
+```
 create table ev_locations
 (
 Fuel_Type_Code           varchar(400) NULL,
@@ -248,6 +251,7 @@ Latitude                 varchar(400) NULL,
 Facility_Type            varchar(400) NULL,
 Longitude                varchar(400) NULL
 );
+```
 
 ## Remove the header row
 
