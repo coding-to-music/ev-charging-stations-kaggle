@@ -267,6 +267,9 @@ pip install csvkit
 
 ```
 csvcut -c 1,2,3,5,6,7,8,10,12,13,25,26,48 original-1.csv > original-2.csv
+
+
+csvcut -c 1,2,3,5,6,7,8,10,12,13,25,26,48 junk.csv > junk-2.csv
 ```
 
 ## To ensure there are line breaks after each line
@@ -313,6 +316,9 @@ awk -F ',' '{print NF; exit}' original-2.csv
 65
 65
 13
+
+awk -F ',' '{print NF; exit}' junk-2.csv
+
 ```
 
 ## Count the number of rows in the csv file
@@ -326,12 +332,22 @@ wc -l original-2.csv
 71819
 71818
 70453
+
+wc -l junk-2.csv
 ```
 
 ## Copy original-2.csv to a file named ev_locations.csv
 
 ```
 cp original-2.csv ev_locations.csv
+```
+
+## Count how many columns are in each row of the csv file
+
+```
+python count-csv-columns.py junk.csv
+python count-csv-columns.py original.csv
+python count-csv-columns.py ev_locations.csv
 ```
 
 ## verify can connect from the command line
